@@ -1,6 +1,7 @@
 package com.cos.blog.web;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.cos.blog.domain.user.dto.JoinReqDto;
 import com.cos.blog.domain.user.dto.LoginReqDto;
 import com.cos.blog.service.UserService;
+import com.cos.blog.util.Script;
 
 // http://localhost:8080/blog/user
 @WebServlet("/user")
@@ -60,7 +62,7 @@ public class UserController extends HttpServlet {
 			if(result == 1) {
 				response.sendRedirect("index.jsp");
 			}else {
-				// Script.back();
+				Script.back(response, "회원가입 실패");
 			}
 		}
 	}
