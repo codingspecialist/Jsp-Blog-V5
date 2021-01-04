@@ -55,7 +55,13 @@ public class UserController extends HttpServlet {
 			dto.setPassword(password);
 			dto.setEmail(email);
 			dto.setAddress(address);
-			userService.회원가입(dto);
+			System.out.println("회원가입 : "+dto);
+			int result = userService.회원가입(dto);
+			if(result == 1) {
+				response.sendRedirect("index.jsp");
+			}else {
+				// Script.back();
+			}
 		}
 	}
 
