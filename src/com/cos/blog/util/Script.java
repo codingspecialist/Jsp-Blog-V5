@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+
 public class Script {
 
 	public static void back(HttpServletResponse response, String msg) {
