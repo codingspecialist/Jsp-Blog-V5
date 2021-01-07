@@ -18,12 +18,22 @@
 		<filter-class>com.cos.blog.config.CharConfig</filter-class>
 	</filter>
 	
+	<filter>
+		<filter-name>forbiddenUrlConfig</filter-name>
+		<filter-class>com.cos.blog.config.ForbiddenUrlConfig</filter-class>
+	</filter>
+	
+	<!-- 매핑순서가 1 -->
 	<filter-mapping>
 		<filter-name>charConfig</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	
+
+	<!-- 매핑순서가 2	 -->
+	<filter-mapping>
+		<filter-name>forbiddenUrlConfig</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
 </web-app>
 
 

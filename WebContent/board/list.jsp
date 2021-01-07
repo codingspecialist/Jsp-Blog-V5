@@ -20,6 +20,7 @@
 		<div class="progress-bar" style="width: 70%"></div>
 	</div>
 
+		<!-- JSTL foreach문을 써서 뿌리세요. el표현식과 함께 -->
 		<div class="card col-md-12 m-2">
 			<div class="card-body">
 				<h4 class="card-title">제목</h4>

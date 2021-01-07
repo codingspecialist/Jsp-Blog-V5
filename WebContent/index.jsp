@@ -2,5 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%
-	response.sendRedirect("board/list.jsp");    
+	RequestDispatcher dis = 
+	request.getRequestDispatcher("board/list.jsp");
+	dis.forward(request, response);
 %>
