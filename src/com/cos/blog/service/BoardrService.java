@@ -18,8 +18,8 @@ public class BoardrService {
 		return boardDao.save(dto);
 	}
 	
-	public List<Board> 글목록보기(){
-		return boardDao.findAll();
+	public List<Board> 글목록보기(int page){
+		return boardDao.findAll(page);
 	}
 
 }
