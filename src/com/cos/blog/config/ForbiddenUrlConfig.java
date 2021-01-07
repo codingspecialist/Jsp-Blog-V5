@@ -21,11 +21,7 @@ public class ForbiddenUrlConfig implements Filter{
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
     	HttpServletResponse response = (HttpServletResponse) resp;
-		
-    	System.out.println("ForbiddenUrlConfig 접근");
-    	System.out.println(request.getRequestURL());
-    	System.out.println(request.getRequestURI());
-    	
+
     	if(request.getRequestURI().equals("/blog/") || request.getRequestURI().equals("/blog/index.jsp")) {
     		chain.doFilter(request, response);
     	}else {
