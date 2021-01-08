@@ -4,6 +4,7 @@
 <%@ include file="../layout/header.jsp" %>
 
 <div class="container">
+
 	<br />
 	<br />
 	<h6 class="m-2">
@@ -61,6 +62,7 @@
 	</div>
 	<!-- 댓글 박스 끝 -->
 </div>
+
 
 </body>
 </html>
