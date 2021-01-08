@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="progress col-md-12 m-2">
-		<div class="progress-bar" style="width: 70%"></div>
+		<div class="progress-bar" style="width: ${currentPosition}%"></div>
 	</div>
 
 	<!-- JSTL foreach문을 써서 뿌리세요. el표현식과 함께 -->
@@ -34,8 +34,25 @@
 	<br />
 	<!-- disabled -->
 	<ul class="pagination justify-content-center">
-		<li class="page-item"><a class="page-link" href="/blog/board?cmd=list&page=${param.page-1}">Previous</a></li>
-		<li class="page-item"><a class="page-link" href="/blog/board?cmd=list&page=${param.page+1}">Next</a></li>
+		<c:choose>
+			<c:when test="${param.page == 0}">
+				<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>	
+			</c:when>
+			<c:otherwise>
+				<li class="page-item"><a class="page-link" href="/blog/board?cmd=list&page=${param.page-1}">Previous</a></li>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${lastPage == param.page}">
+				<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>		
+			</c:when>
+			<c:otherwise>
+				<li class="page-item"><a class="page-link" href="/blog/board?cmd=list&page=${param.page+1}">Next</a></li>
+			</c:otherwise>
+		</c:choose>
+		
+		
 	</ul>
 </div>
 

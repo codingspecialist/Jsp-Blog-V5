@@ -71,6 +71,15 @@ public class BoardController extends HttpServlet {
 			List<Board> boards = boardService.글목록보기(page);
 			request.setAttribute("boards", boards);
 			
+			// 계산 (전체 데이터수랑 한페이지몇개 - 총 몇페이지 나와야되는 계산) 3page라면 page의 맥스값은 2
+			// page == 2가 되는 순간  isEnd = true
+			// request.setAttribute("isEnd", true);
+			int boardCount = boardService.글개수();
+			int lastPage = (boardCount-1)/4; // 2/4 = 0, 3/4 = 0, 4/4 = 1, 9/4 = 2 ( 0page, 1page, 2page) 
+			double currentPosition = (double)page/(lastPage)*100;
+			
+			request.setAttribute("lastPage", lastPage);
+			request.setAttribute("currentPosition", currentPosition);
 			RequestDispatcher dis = request.getRequestDispatcher("board/list.jsp");
 			dis.forward(request, response);
 		}
