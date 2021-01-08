@@ -9,6 +9,7 @@ public class DetailRespDto {
 	private String content;
 	private int readCount;
 	private String username;
+	private int userId;
 
 	// 루시 필터 적용해보기
 	public String getTitle() {

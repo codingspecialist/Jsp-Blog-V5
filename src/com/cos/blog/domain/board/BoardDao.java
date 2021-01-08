@@ -13,6 +13,24 @@ import com.cos.blog.domain.user.User;
 
 public class BoardDao {
 	
+	
+	public int deleteById(int id) { // 회원가입
+		String sql = "DELETE FROM board WHERE id = ?";
+		Connection conn = DB.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			int result = pstmt.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // 무조건 실행
+			DB.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
 	public int updateReadCount(int id) { // 회원가입
 		String sql = "UPDATE board SET readCount = readCount+1 WHERE id = ?";
 		Connection conn = DB.getConnection();
@@ -32,7 +50,7 @@ public class BoardDao {
 	
 	public DetailRespDto findById(int id){
 		StringBuffer sb = new StringBuffer();
-		sb.append("select b.id, b.title, b.content, b.readCount, u.username ");
+		sb.append("select b.id, b.title, b.content, b.readCount, b.userId, u.username ");
 		sb.append("from board b inner join user u ");
 		sb.append("on b.userId = u.id ");
 		sb.append("where b.id = ?");
@@ -53,6 +71,7 @@ public class BoardDao {
 				dto.setTitle(rs.getString("b.title"));
 				dto.setContent(rs.getString("b.content"));
 				dto.setReadCount(rs.getInt("b.readCount"));
+				dto.setUserId(rs.getInt("b.userId"));
 				dto.setUsername(rs.getString("u.username"));
 				return dto;
 			}
