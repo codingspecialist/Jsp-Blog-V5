@@ -17,8 +17,10 @@ import com.cos.blog.domain.board.dto.CommonRespDto;
 import com.cos.blog.domain.board.dto.DetailRespDto;
 import com.cos.blog.domain.board.dto.SaveReqDto;
 import com.cos.blog.domain.board.dto.UpdateReqDto;
+import com.cos.blog.domain.reply.Reply;
 import com.cos.blog.domain.user.User;
 import com.cos.blog.service.BoardrService;
+import com.cos.blog.service.ReplyService;
 import com.cos.blog.util.Script;
 import com.google.gson.Gson;
 
@@ -45,6 +47,7 @@ public class BoardController extends HttpServlet {
 			throws ServletException, IOException {
 		String cmd = request.getParameter("cmd");
 		BoardrService boardService = new BoardrService();
+		ReplyService replyService = new ReplyService();
 		// http://localhost:8080/blog/board?cmd=saveForm
 		HttpSession session = request.getSession();
 		if (cmd.equals("saveForm")) {
@@ -89,11 +92,15 @@ public class BoardController extends HttpServlet {
 			dis.forward(request, response);
 		}else if(cmd.equals("detail")) {
 			int id = Integer.parseInt(request.getParameter("id"));
+			
 			DetailRespDto dto = boardService.글상세보기(id); // board테이블+user테이블 = 조인된 데이터!!
+			List<Reply> replys = replyService.글목록보기(id);
+			
 			if(dto == null) {
 				Script.back(response, "상세보기에 실패하였습니다");
 			}else {
 				request.setAttribute("dto", dto);
+				request.setAttribute("replys", replys);
 				//System.out.println("DetailRespDto : "+dto);
 				RequestDispatcher dis = request.getRequestDispatcher("board/detail.jsp");
 				dis.forward(request, response);

@@ -1,5 +1,9 @@
 package com.cos.blog.domain.board.dto;
 
+import java.util.List;
+
+import com.cos.blog.domain.reply.Reply;
+
 import lombok.Data;
 
 @Data
