@@ -9,8 +9,6 @@
 		<button onClick="deleteById(${dto.id})" class="btn btn-danger">삭제</button>
 	</c:if>
 	
-
-
 	<br />
 	<br />
 	<h6 class="m-2">
@@ -34,9 +32,14 @@
 				<div class="panel panel-info">
 					<div class="panel-heading m-2"><b>Comment</b></div>
 					<div class="panel-body">
-						<textarea id="reply__write__form" class="form-control" placeholder="write a comment..." rows="2"></textarea>
-						<br>
-						<button onclick="#" class="btn btn-primary pull-right">댓글쓰기</button>
+						<form action="/blog/reply?cmd=save" method="post">
+							<input type="hidden" name="userId" value="${sessionScope.principal.id}" />
+							<input type="hidden" name="boardId" value="${dto.id}" />
+							<textarea name="content" id="reply__write__form" class="form-control" placeholder="write a comment..." rows="2"></textarea>
+							<br>
+						
+							<button class="btn btn-primary pull-right">댓글쓰기</button>
+						</form>
 						<div class="clearfix"></div>
 						<hr />
 						
