@@ -2,9 +2,7 @@ package com.cos.blog.web;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cos.blog.domain.board.dto.CommonRespDto;
+import com.cos.blog.domain.reply.Reply;
 import com.cos.blog.domain.reply.dto.SaveReqDto;
 import com.cos.blog.service.ReplyService;
 import com.cos.blog.util.Script;
@@ -49,12 +48,19 @@ public class ReplyController extends HttpServlet {
 			SaveReqDto dto = gson.fromJson(reqData, SaveReqDto.class);
 			System.out.println("dto : "+dto);
 
-			
+			CommonRespDto<Reply> commonRespDto = new CommonRespDto<>();
+			Reply reply = null;
 			int result = replyService.댓글쓰기(dto);
+			if(result != -1) {
+				reply = replyService.댓글찾기(result);
+				commonRespDto.setStatusCode(1); //1, -1
+				commonRespDto.setData(reply);
+			}else {
+				commonRespDto.setStatusCode(-1); //1, -1
+			}
 			
-			CommonRespDto commonRespDto = new CommonRespDto<>();
-			commonRespDto.setStatusCode(result); //1, -1
-			//commonRespDto.setData(dto);
+			
+			
 			
 			String responseData = gson.toJson(commonRespDto); 
 			System.out.println("responseData : "+responseData);
