@@ -9,7 +9,7 @@
 			<button type="button" class="btn btn-info" onClick="usernameCheck()">중복체크</button>
 		</div>
 		<div class="form-group">
-			<input type="text" name="username" id="username" class="form-control" placeholder="Enter Username"  required/>
+			<input type="text" name="username" id="username" class="form-control" placeholder="Enter Username"  required />
 		</div>
 
 		<div class="form-group">
@@ -56,6 +56,7 @@
 				alert('유저네임이 중복되었습니다.')
 			}else{
 				isChecking = true;
+				$("#username").attr("readonly", "readonly");
 				alert("해당 유저네임을 사용할 수 있습니다.")
 			}
 		});

@@ -14,6 +14,10 @@ public class ReplyService {
 		replyDao = new ReplyDao();
 	}
 	
+	public int 댓글삭제(int id) {
+		return replyDao.deleteById(id);
+	}
+	
 	public List<Reply> 글목록보기(int boardId){
 		return replyDao.findAll(boardId);
 	}
