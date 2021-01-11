@@ -14,6 +14,41 @@ import com.cos.blog.domain.user.User;
 
 public class BoardDao {
 	
+	public List<Board> findByKeyword(String keyword, int page){
+		String sql = "SELECT * FROM  board WHERE title like ? ORDER BY id DESC LIMIT ?, 4"; // 0,4   4,4   8,4
+		Connection conn = DB.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs  = null;
+		List<Board> boards = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, page*4); // 0 -> 0, 1 ->4, 2->8
+			rs =  pstmt.executeQuery();
+			
+			// Persistence API
+			while(rs.next()) { // 커서를 이동하는 함수
+				Board board = Board.builder()
+						.id(rs.getInt("id"))
+						.title(rs.getString("title"))
+						.content(rs.getString("content"))
+						.readCount(rs.getInt("readCount"))
+						.userId(rs.getInt("userId"))
+						.createDate(rs.getTimestamp("createDate"))
+						.build();
+				boards.add(board);	
+			}
+			return boards;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // 무조건 실행
+			DB.close(conn, pstmt, rs);
+		}
+		
+		return null;
+	}
+	
+	
 	public int update(UpdateReqDto dto) {
 		String sql = "UPDATE board SET title = ?, content = ? WHERE id = ?";
 		Connection conn = DB.getConnection();
@@ -103,8 +138,29 @@ public class BoardDao {
 		return null;
 	}
 	
+	public int count(String keyword) {
+		String sql = "SELECT count(*) FROM board WHERE title like ?";
+		Connection conn = DB.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs  = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			rs =  pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // 무조건 실행
+			DB.close(conn, pstmt, rs);
+		}
+		return -1;
+	}
+	
 	public int count() {
-		String sql = "SELECT count(*), id FROM board";
+		String sql = "SELECT count(*) FROM board";
 		Connection conn = DB.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs  = null;
